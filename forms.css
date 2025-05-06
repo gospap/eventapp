@@ -1,0 +1,148 @@
+/* global.css */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: linear-gradient(135deg, #74ebd5 0%, #acb6e5 100%);
+  animation: backgroundShift 10s infinite alternate;
+}
+#rules {
+  position: absolute;
+  right: 15%;
+  top: 30%;
+}
+
+@keyframes backgroundShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
+}
+
+form {
+  background: rgba(255, 255, 255, 0.9);
+  padding: 2rem;
+  border-radius: 15px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  width: 90%;
+  max-width: 400px;
+  text-align: center;
+  animation: fadeIn 2s ease forwards;
+  transform: translateX(120px);
+  opacity: 0;
+}
+
+@keyframes fadeIn {
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+h1 {
+  margin-bottom: 1rem;
+  color: #333;
+}
+
+label {
+  display: block;
+  margin: 0.5rem 0 0.2rem;
+  font-weight: bold;
+  color: #555;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="email"] {
+  width: 100%;
+  padding: 0.7rem;
+  margin-bottom: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="email"]:focus {
+  border-color: #6c63ff;
+  box-shadow: 0 0 8px rgba(108, 99, 255, 0.3);
+}
+
+input[type="submit"] {
+  background-color: #6c63ff;
+  color: white;
+  padding: 0.7rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+input[type="submit"]:hover {
+  background-color: #5548c8;
+  transform: scale(1.05);
+}
+
+a {
+  color: #6c63ff;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+a:hover {
+  color: #5548c8;
+}
+
+i b {
+  font-size: 1.1rem;
+  display: block;
+  margin-bottom: 1rem;
+  color: #333;
+}
+li {
+  display: flex;
+  flex-direction: row;
+}
+
+#rules ul {
+  list-style: none;
+  padding: 0;
+}
+#rules li span {
+  margin-left: 10px;
+  font-weight: bold;
+}
+.valid {
+  color: green;
+}
+.invalid {
+  color: red;
+}
+#rules li {
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+/* Responsive tweaks */
+@media (max-width: 480px) {
+  form {
+    padding: 1.5rem;
+  }
+
+  input[type="submit"] {
+    width: 100%;
+  }
+}
