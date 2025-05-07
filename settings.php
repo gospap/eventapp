@@ -1,6 +1,34 @@
 <?php
 include('db.php');
 session_start();
+
+if (isset($_POST['save_password'])) {
+    $newpassword = $_POST['newpassword'];
+    $confirmpassword = $_POST['confirmpassword'];
+    if (empty($newpassword) || empty($confirmpassword)) {
+        echo "<script>alert('Please fill in all fields.');</script>";
+    } elseif ($newpassword !== $confirmpassword) {
+        echo "<script>alert('Passwords do not match.');</script>";
+    } else {
+        $token = bin2hex(random_bytes(32));
+        $hashed_password = password_hash($newpassword, PASSWORD_DEFAULT);
+        $username = $_SESSION['username'];
+
+        $sql = "SELECT * FROM users WHERE username = '$username'";
+        $result = mysqli_query($conn, $sql);
+
+        if (mysqli_num_rows($result) > 0) {
+            $sql = "UPDATE users SET password_hash = '$hashed_password' WHERE username = '$username'";
+            if (mysqli_query($conn, $sql)) {
+                echo "<script>alert('Password updated successfully.');</script>";
+            } else {
+                echo "<script>alert('Error updating password.');</script>";
+            }
+        } else {
+            echo "<script>alert('User not found.');</script>";
+        }
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -51,7 +79,7 @@ session_start();
                             <h5 class="mb-0"><?php echo strtoupper($_SESSION['username']); ?></h5>
                             <small class="text-muted"><?php echo $_SESSION['email']; ?></small>
                         </div>
-                        <form>
+                        <form method="POST" action="settings.php">
                             <div class="mb-3">
                                 <label class="form-label">Username</label>
                                 <input type="text" class="form-control" value="<?php echo $_SESSION['username']; ?>" readonly>
@@ -62,13 +90,13 @@ session_start();
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">New Password</label>
-                                <input type="password" class="form-control">
+                                <input type="password" name="newpassword" class="form-control">
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">Confirm Password</label>
-                                <input type="password" class="form-control">
+                                <input type="password" name="confirmpassword" class="form-control">
                             </div>
-                            <button type="submit" class="btn btn-primary w-100">Save</button>
+                            <button type="submit" name="save_password" class="btn btn-primary w-100">Save</button>
                         </form>
                     </div>
                     <br><br><br>
